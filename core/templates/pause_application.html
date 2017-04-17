@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+<table class="display">
+        <tr>
+    <th>id</th>
+    <th>Created Date</th>
+    <th>End Date</th>
+    <th>Days Paused</th>
+    <th>Customer</th>
+    <th>Pauser</th>
+    <th>Package</th>
+    <th>Price</th>
+    </tr>
+        <tr>
+            <td>{{ membership.id }}</td>
+            <td>{{ membership.createdTime }}</td>
+            <td>{{ membership.endedTime }}</td>
+            <td>{{ membership.daysPaused }}</td>
+            <td>{{ membership.customer }}</td>
+            <td>{{ membership.pauser }}</td>
+            <td>{{ membership.package }}</td>
+            <td>{{ membership.price }}</td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

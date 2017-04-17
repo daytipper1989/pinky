@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <table class="display">
+    <tr>
+        <td></td>
+    {% for trainer in trainerList %}
+        <th>{{trainer}}</th>
+    {% endfor %}
+    </tr>
+    {% for class in classList %}
+        <tr>
+            <th>{{class.startingTime}}</th>
+            {% for trainer in trainerList %}
+                {% if class.trainer == trainer %}
+                    <td>{{class.type}}</td>
+                {% else %}
+                <td id="empty"></td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

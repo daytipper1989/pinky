@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" type="text/css" href="/media/jquery.datetimepicker.css"/>
+    <style>
+/*Strip the ul of padding and list styling*/
+body{
+    background-color:#fafafa;
+}
+ul {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position: absolute;
+}
+
+/*Create a horizontal list with spacing*/
+li {
+	display:inline-block;
+	float: left;
+	margin-right: 1px;
+}
+/*Style for menu links*/
+li a {
+	display:block;
+	min-width:140px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #fff;
+	background: #2f3036;
+	text-decoration: none;
+}
+
+/*Hover state for top level links*/
+li:hover a {
+	background: #19c589;
+}
+
+/*Style for dropdown links*/
+li:hover ul a {
+	background: #f3f3f3;
+	color: #2f3036;
+	height: 40px;
+	line-height: 40px;
+}
+
+/*Hover state for dropdown links*/
+li:hover ul a:hover {
+	background: #19c589;
+	color: #fff;
+}
+/*Hide dropdown links until they are needed*/
+li ul {
+	display: none;
+}
+
+/*Make dropdown links vertical*/
+li ul li {
+	display: block;
+	float: none;
+}
+
+/*Prevent text wrapping*/
+li ul li a {
+	width: auto;
+	min-width: 100px;
+	padding: 0 20px;
+}
+
+/*Display the dropdown on hover*/
+ul li a:hover + .hidden, .hidden:hover {
+	display: block;
+}
+table.form{text-align: left;}
+.form td{text-align: left;}
+.form tr{text-align: left;}
+.form th{text-align: left;}
+
+table.display {
+	font-family: "Lato","sans-serif";   }       /* added custom font-family  */
+	table.display {
+	margin: 0 auto;
+	border-collapse:collapse;   }
+	.display td {                            /* removed the border from the table data rows  */
+	text-align: center;
+	width: 10em;
+	padding: 1em;       }
+	.display th {                              /* removed the border from the table heading row  */
+	text-align: center;
+	padding: 1em;
+	background-color: #e8503a;       /* added a red background color to the heading cells  */
+	color: white;       }                 /* added a white font color to the heading text */
+	.display tr {
+	height: 1em;    }
+	table.display tr:nth-child(even) {            /* added all even rows a #eee color  */
+	    background-color: #eee;     }
+	table.display tr:nth-child(odd) {            /* added all odd rows a #fff color  */
+	background-color:#fff;      }
+
+#content {margin-left: 5em;margin-top:2em;}
+#empty {background-color: #000;}
+.footer {
+    position:fixed;
+    left:0;
+    right:0;
+    bottom: 0;
+    width: 500px;
+    margin: auto;
+    text-align: center;
+    background-color: #111;
+    color: white;
+    height: 20px;/* or however high you would like */
+}
+
+
+#failure
+{
+   width: 400px;
+   border: 1px solid #D8D8D8;
+   padding: 5px;
+   border-radius: 5px;
+   <span class="IL_AD" id="IL_AD10">font-family</span>: Arial;
+   font-size: 11px;
+   text-transform: uppercase;
+   background-color: rgb(255, 249, 242);
+   color: rgb(211, 0, 0);
+   text-align: center;
+}
+
+img
+{
+   float: left;
+}
+
+#success
+{
+   width: 400px;
+   border: 1px solid #D8D8D8;
+   padding: 10px;
+   border-radius: 5px;
+   font-family: Arial;
+   font-size: 11px;
+   text-transform: uppercase;
+   background-color: rgb(236, 255, 216);
+   color: green;
+   text-align: center;
+   margin-top: 30px;
+}
+
+#success img
+{
+   <span class="IL_AD" id="IL_AD6">position</span>: relative;
+   bottom: 5px;
+}
+
+    </style>
+    <title>{% block title %}Pinky's Gym{% endblock %}</title>
+</head>
+
+<body>
+    <div id="nav">
+    <ul id="menu">
+		<li><a href="/">Home</a></li>
+		<li>
+			<a href="/pinky/application/all/">Memberships</a>
+			<ul class="hidden">
+				<li><a href="/pinky/application/new/">New</a></li>
+				<li><a href="/pinky/application/renew/">Renew</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="/pinky/order/all/">Orders</a>
+			<ul class="hidden">
+				<li><a href="/pinky/order/new/">New</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="/pinky/class/all/">Classes</a>
+			<ul class="hidden">
+				<li><a href="/pinky/class/new/">New</a></li>
+				<li><a href="/pinky/classtype/new/">Add Type</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="/pinky/trainer/all/">Trainers</a>
+			<ul class="hidden">
+				<li><a href="/pinky/trainer/new/">New</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="/pinky/general/attendance/">Attendance</a>
+			<ul class="hidden">
+				<li><a href="/pinky/class/attendance/">Class</a></li>
+				<li><a href="/pinky/spa/attendance/">Spa</a></li>
+				<li><a href="/pinky/machine/attendance/">Machine</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="/pinky/customer/data/">Customers Data</a>
+			<ul class="hidden">
+				<li><a href="/pinky/exercise/counter/">Exercise</a></li>
+				<li><a href="/pinky/customer/progress/">Progress</a></li>
+			</ul>
+		</li>
+		{% if user.is_superuser %}<li><a href='/admin/'>Admin</a></li>{% endif %}
+        {% if user.is_authenticated %}<li><a href='/pinky/logout/'>Logout</a></li>{% endif %}
+	</ul>
+	</div><br/><br/>
+    <div id="content">
+        {% if successMessage %}
+        <div id="success">
+            <img src="/media/correct.png" alt="Success" /> {{ successMessage }}
+        </div>
+        {% endif %}
+        {% if failureMessage %}
+            <div id="failure">
+                <img src="/media/error.png" alt="Error" /> {{ failureMessage }}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </div><br/><br/>
+    <div class="footer">Copyright © 2016 Pinky's Gym</div>
+
+</body>
+<script src="/media/jquery.js"></script>
+<script src="/media/jquery.datetimepicker.full.js"></script>
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 7,
+lang:'en',
+format:'Y-m-d H:00:00',
+disabledDates:[],
+startDate:	mm+'/'+dd+'/'+yyyy
+});
+$('#datetimepicker').datetimepicker({value:'',step:60});
+
+</script>
+</html>

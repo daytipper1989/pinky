@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+<h1>Welcome to Pinky's Gym!!!</h1>
+<p>You are logged in as, {{user.username}}</p>
+{% else %}
+<h1>Please enter your username and password</h1>
+<form action="" method="post">
+    <table class="form">
+        {% csrf_token %}
+{{form.as_table}}
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+{% endif %}
+{% endblock %}

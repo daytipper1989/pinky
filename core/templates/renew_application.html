@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+    <table class="form">
+    <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    {{ form2.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post" id="product_form">
+    {% csrf_token %}
+    <div id="add_products">
+        <table class="form">
+            <tr>
+                <th>Product:</th>
+                <td>
+                    <select name="product" id="product">
+                        <option selected="selected" value="">---------------------------</option>
+                        <optgroup label="BUFFET">
+                            {% for product in productList %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="MAKEUP - BRAND1">
+                            {% for product in productList %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="MAKEUP - BRAND2">
+                            {% for product in productList %}
+                            <option value="{{ product.id }}">{{ product.name }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Quantity:</th>
+                <td><input name="quantity" id="quantity" type="text" /></td>
+            </tr>
+        </table>
+    </div>
+    <input type="button" value="Add" onClick="addProduct()"/>
+    <table class="form">
+    {{ form2.as_table }}
+    </table>
+    <table class="form">
+    {{ locationSelectForm.as_table }}
+    </table>
+    <table class="form">
+    {{ addressForm.as_table }}
+    </table>
+    <table class="form">
+    {{ shipmentSelectForm.as_table }}
+    </table>
+    <table class="form">
+    {{ governmentSelectForm.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+<script>
+var counter = 1;
+function addProduct() {
+    var div = document.getElementById('add_products');
+    div.innerHTML = div.innerHTML + '<table class="form" id="table'+counter+'"><tr><th>Product:</th><td><select name="product" id="product"><option selected="selected" value="">---------</option>{% for product in productList %}<option value="{{ product.id }}">{{ product.name }} | {{ product.productType }}</option>{% endfor %}</select></td></tr><tr><th>Quantity:</th><td><input name="quantity" id="quantity" type="text" /></td><td><input type="button" id="remove" value="Remove" onClick="removeProduct('+counter+')"/></td></tr></table>';
+    counter = counter + 1;
+}
+function removeProduct(c){
+    var d = document.getElementById('add_products');
+    var t = document.getElementById('table'+c);
+    d.removeChild(t);
+}
+</script>
+{% endblock %}

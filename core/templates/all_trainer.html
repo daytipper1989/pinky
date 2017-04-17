@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table class="form">
+            {{ skillSelectForm.as_table }}
+            {{ trainerSelectForm.as_table }}
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+    <table class="display">
+    <tr><th>Trainer</th><th>Skills</th><th>Mobile</th><th>Address</th></tr>
+    {% for trainer in trainerList %}
+        <tr><td>{{trainer}}</td><td>{% for s in trainer.skill.all %}{{s.name}},{% endfor %}</td><td>{{trainer.mobile}}</td><td>{{trainer.address}}</td></tr>
+    {% endfor %}
+
+    </table>
+</div>
+{% endblock %}

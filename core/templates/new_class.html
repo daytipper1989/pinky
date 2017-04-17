@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post" id="class_type_form">
+    <table class="form">
+    {% csrf_token %}
+    {{ form.as_table }}
+    </table>
+    <input type="button" value="Submit" onClick="confirmClassType()" />
+</form>
+<script>
+function confirmClassType() {
+    var trainerName = document.getElementById("id_trainer");
+    var classTypeName = document.getElementById("id_type");
+    {% for trainer in trainerList %}
+        if (trainerName.value == '{{ trainer.id }}'){
+            {% for s in trainer.skill.all %}
+                if (classTypeName.value == '{{ s.id }}'){
+                    var form = document.getElementById("class_type_form");
+                    form.submit();
+                    return;
+                }
+            {% endfor %}
+        }
+    {% endfor %}
+    var conf = confirm('The trainer you chose has not got the skill for the chosen class type. Are you sure of your choice?');
+    if (conf == true){
+        var form = document.getElementById("class_type_form");
+        form.submit();
+    }
+}
+</script>
+{% endblock %}

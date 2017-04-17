@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table class="form">
+            {{ customerSearchForm.as_table }}
+            {{ employeeSelectForm.as_table }}
+            {{ membershipPriceFilterForm.as_table }}
+        </table>
+        <input type="submit" value="Submit" />
+    </form>
+    <table class="display">
+        <tr>
+    <th>id</th>
+    <th>Customer</th>
+    <th>Location</th>
+    <th>Shipment</th>
+    <th>Government</th>
+    <th>Address</th>
+    <th>Employee</th>
+    <th>Products</th><th>Price</th></tr>
+    {% for order in orderList %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer }}</td>
+            <td>{{ order.location }}</td>
+            <td>{{ order.shipment }}</td>
+            <td>{{ order.government }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.employee }}</td>
+            <td>
+                {% for orderDetail in orderDetailList %}
+                    {% if orderDetail.order == order %}
+                        {{orderDetail.quantity}} {{ orderDetail.product }}(s): {{orderDetail.price}}<br/>
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ order.price }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+{% endblock %}

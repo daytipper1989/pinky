@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <div id="add_attendees">
+        <table class="form">
+            <tr>
+                <th>Mobile:</th>
+                <td><input name='mobile' id='mobile' type='text' maxlength="20"/></td>
+            </tr>
+        </table>
+    </div>
+    <!--<input type="button" value="Add" onClick="addAttendee()"/>-->
+    <input type="submit" value="Submit" />
+</form>
+
+<script>
+var counter=1;
+function addAttendee() {
+    var div = document.getElementById('add_attendees');
+    div.innerHTML = div.innerHTML + '<table class="form" id="table'+counter+'"><tr><th>Mobile:</th><td><input name="mobile" id="mobile" type="text" maxlength="20"/></td><td><input type="button" value="Remove" onClick="removeAttendee('+counter+')"/></td></tr></table>';
+    counter++;
+}
+function removeAttendee(c){
+    var d = document.getElementById('add_attendees');
+    var t = document.getElementById('table'+c);
+    d.removeChild(t);
+}
+</script>
+{% endblock %}
